@@ -21,7 +21,7 @@ if not playlist_num:
     exit()
 # TODO check length of playlist_num and if > 1, enter a for loop to ask user which playlist to convert
 
-# TODO make this into a function
+#TODO make this into a function
 playlist_to_convert = cursor.execute(
     "SELECT track.artist,track.title,track.album,track.length,playlisttrack.tindex FROM "
     "track INNER JOIN playlisttrack on track.track_id = playlisttrack.track_id WHERE "
