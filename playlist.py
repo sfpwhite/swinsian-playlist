@@ -22,9 +22,11 @@ if not playlist_num:
 # TODO check length of playlist_num and if > 1, enter a for loop to ask user which playlist to convert
 
 # TODO make this into a function
-playlist_to_convert = cursor.execute("SELECT track.artist,track.title,track.album,track.length,playlisttrack.tindex FROM \
-                        track INNER JOIN playlisttrack on track.track_id = playlisttrack.track_id WHERE \
-                        playlisttrack.playlist_id IS ? ORDER BY playlisttrack.tindex", (playlist_num[0][0],)).fetchall()
+playlist_to_convert = cursor.execute(
+    "SELECT track.artist,track.title,track.album,track.length,playlisttrack.tindex FROM "
+    "track INNER JOIN playlisttrack on track.track_id = playlisttrack.track_id WHERE "
+    "playlisttrack.playlist_id IS ? ORDER BY playlisttrack.tindex",
+    (playlist_num[0][0],)).fetchall()
 
 # TODO print to cue sheet in a function
 with open(f'{playlist}.cue', "w") as cue, open(f'{playlist}.csv', "w", newline='') as csvfile:
@@ -65,13 +67,14 @@ with open(f'{playlist}.cue', "w") as cue, open(f'{playlist}.csv', "w", newline='
         timestamp_end = str(datetime.timedelta(
             seconds=playlist_length)).split(':', maxsplit=1)[1]
 
-        cue.write(f'TRACK {str(tindex).zfill(2)} AUDIO\n')
-        cue.write(f'  PERFORMER "{artist}"\n')
-        cue.write(f'  TITLE "{title}"\n')
-        cue.write(f'  INDEX 01 {timestamp_begin}:00\n')
-
         csvwriter.writerow(
             {f'start time': f'{show_date} 00:{timestamp_begin}', 'end time': f'{show_date} 00:{timestamp_end}',
              'duration': f'{length_formatted}', 'title': f'{title}', 'artist': f'{artist}', 'album': f'{album}'})
+
+        cue.write(
+            f'TRACK {str(tindex).zfill(2)} AUDIO\n'
+            f'  PERFORMER "{artist}"\n'
+            f'  TITLE "{title}"\n'
+            f'  INDEX 01 {timestamp_begin}:00\n')
 
 db.close()
