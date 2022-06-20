@@ -8,7 +8,7 @@ playlist = sys.argv[1]
 
 # TODO perhaps make this into a class
 db = sqlite3.connect(
-    '/Users/swhite/Library/Application Support/Swinsian/Library.sqlite')
+    '/Users/username/Library/Application Support/Swinsian/Library.sqlite')
 cursor = db.cursor()
 
 # TODO make this into a function
@@ -33,9 +33,9 @@ with open(f'{playlist}.cue', "w") as cue, open(f'{playlist}.csv', "w", newline='
     now = datetime.datetime.now()
     show_date = playlist[0:2] + "-" + playlist[2:4] + "-" + str(now.year)[2:4]
 
-    cue.write('PERFORMER "DJ Huge Problem"\n')
-    cue.write(f'TITLE \"Lullabies For Cthulhu {show_date}\"\n')
-    cue.write(f'FILE \"lullabies-for-cthulhu-{show_date}.mp3\"\n')
+    cue.write('PERFORMER "DJ name"\n')
+    cue.write(f'TITLE \"showname {show_date}\"\n')
+    cue.write(f'FILE \"filename-{show_date}.mp3\"\n')
 
     fieldnames = ["start time", "end time", "duration", "title", "artist",
                   "album"]
